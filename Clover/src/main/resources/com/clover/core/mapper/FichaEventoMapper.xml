@@ -1,0 +1,59 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clover.core.mapper.FichaEventoMapper">
+
+
+    <select id="getGeneral" resultType="java.util.HashMap">
+        SELECT
+			titulo,
+			fecha
+        FROM
+        	evento
+        WHERE
+        	id_evento = #{idEvento}
+    </select>
+
+    <select id="getAsistentes" resultType="java.util.HashMap">
+        SELECT
+			id_usuario as id,
+			nombre,
+			picture
+        FROM
+        	usuario
+        WHERE
+        	id_usuario IN (
+        		SELECT 
+        			id_usuario
+        		FROM
+        			usu_even
+        		WHERE
+        			id_evento = #{idEvento}
+        	)
+    </select>
+
+    <select id="getActividades" resultType="java.util.HashMap">
+        SELECT
+			nombre,
+			precio
+        FROM
+        	actividad
+        WHERE
+        	id_actividad IN (
+        		SELECT 
+        			id_actividad
+        		FROM
+        			propu_act
+        		WHERE
+        			id_propuesta = (
+        				SELECT
+        					id_propuesta
+        				FROM 
+        					evento
+        				WHERE
+        					id_evento = #{idEvento}
+        			)
+        	)
+    </select>
+</mapper>

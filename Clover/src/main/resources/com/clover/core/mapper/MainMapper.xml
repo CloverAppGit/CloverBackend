@@ -1,0 +1,37 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.clover.core.mapper.MainMapper">
+
+    <resultMap id="ListItemResult" type="com.clover.core.model.ListItemModel">
+        <id 	column="id_evento" 	property="id" />
+        <result column="titulo" 	property="titulo" />
+        <result column="fecha" 		property="fecha" />
+    </resultMap>
+
+    <select id="getEventosMapped" resultMap="ListItemResult">
+        select id_evento, titulo, fecha from evento
+    </select>
+
+    <select id="getEventos" resultType="com.clover.core.model.ListItemModel">
+        SELECT
+        	id_evento as id,
+        	titulo,
+        	fecha
+        FROM
+        	evento
+        WHERE
+        	id_evento IN (
+        		SELECT 
+        			id_evento
+        		FROM 
+        			usu_even
+        		WHERE
+        			id_usuario = #{idUsuario}
+        	)
+        ORDER BY
+        	fecha ASC
+        LIMIT 3
+    </select>
+</mapper>
