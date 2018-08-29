@@ -44,6 +44,7 @@ public class LoginServiceImpl implements LoginService
 		u.setNombre(usuario.getNombre());
 		u.setApellidos(usuario.getApellidos());
 		u.setPicture(usuario.getPicture());
+		u.setLastLogin(new Date());
 		
 		usuarioRepo.save(u);
 		

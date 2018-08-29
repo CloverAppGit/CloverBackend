@@ -23,6 +23,12 @@ public interface ActividadRepo extends JpaRepository<ActividadEntity, Serializab
 	/*
 	 * Obtiene las actividades por id de evento
 	 */
-    @Query("select p.actividades from PropuestaEntity p where p.idPropuesta = (SELECT e.propuesta.idPropuesta FROM EventoEntity e WHERE e.idEvento = ?1)")
+    @Query("select e.actividades from EventoEntity e where e.idEvento = ?1")
 	public abstract List<ActividadEntity> findByIdEvento(long idEvento);
+
+	/*
+	 * Obtiene las actividades por tipo
+	 */
+//    @Query("select a from ActividadEntity a where a.tipo = ?")
+    public abstract List<ActividadEntity> findByTipo(String tipo);
 }

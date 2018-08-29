@@ -1,12 +1,9 @@
 package com.clover.core.serviceImpl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -14,19 +11,14 @@ import org.springframework.stereotype.Service;
 import com.clover.core.entity.ActividadEntity;
 import com.clover.core.entity.EmpresaEntity;
 import com.clover.core.entity.EventoEntity;
-import com.clover.core.entity.PropuestaEntity;
 import com.clover.core.entity.UsuEvenEntity;
 import com.clover.core.entity.UsuarioEntity;
 import com.clover.core.repository.ActividadRepo;
 import com.clover.core.repository.EmpresaRepo;
 import com.clover.core.repository.EventoRepo;
-import com.clover.core.repository.PropuestaRepo;
 import com.clover.core.repository.UsuEvenRepo;
 import com.clover.core.repository.UsuarioRepo;
 import com.clover.core.service.GodService;
-import com.clover.core.utils.HibernateUtil;
-
-import antlr.debug.Event;
 
 @Service("GodService")
 public class GodServiceImpl implements GodService
@@ -44,10 +36,6 @@ public class GodServiceImpl implements GodService
 	private UsuEvenRepo usuEvenRepo;
 
 	@Autowired
-	@Qualifier("PropuestaRepo")
-	private PropuestaRepo propuestaRepo;
-
-	@Autowired
 	@Qualifier("ActividadRepo")
 	private ActividadRepo actividadRepo;
 
@@ -56,6 +44,28 @@ public class GodServiceImpl implements GodService
 	private EmpresaRepo empresaRepo;
 	
 	private static final Log logger = LogFactory.getLog(GodService.class);
+
+	@Override
+	public boolean startUp()
+	{
+		try
+		{
+			logger.debug("Inicio Start Up");
+
+			createEmpresas(5);
+			createActividades(15);
+			createEventos(10);
+//			createEvenAct(15);
+//			createUsuarios(40);
+//			createUsuEven(15);
+			
+			logger.debug("Fin Start Up");
+			return true;
+		} catch (Exception ex)
+		{
+			return false;
+		}
+	}
 
 	@Override
 	public boolean createEmpresas(int n)
@@ -98,7 +108,18 @@ public class GodServiceImpl implements GodService
 				EmpresaEntity empresa = empresaRepo.findAll().get((int)(Math.random() * (empresaRepo.findAll().size() - 1)));
 				
 				entity.setEmpresa(empresa);
-				entity.setPrecio((float)(Math.random() * 10));
+				entity.setPrecio((float)(Math.random() * 15.75));
+				
+				int tipo = (int)(Math.random() * 2);
+				if (tipo == 0)
+				{
+					entity.setTipo("R");
+				}
+				else
+				{
+					entity.setTipo("C");
+				}
+				
 				actividadRepo.save(entity);
 			}
 			logger.debug("Fin Create Actividades");
@@ -110,30 +131,23 @@ public class GodServiceImpl implements GodService
 	}
 
 	@Override
-	public boolean createPropuestas(int n)
+	public boolean createEventos(int n)
 	{
 		try
-		{			
-			logger.debug("Inicio Create Propuestas");
-			PropuestaEntity entity = null;
-			for (long i = 0; i < n; i++)
+		{
+			logger.debug("Inicio Create Eventos");
+			long eventos = eventoRepo.findAll().size();
+			
+			EventoEntity entity = null;
+			for (long i = eventos + 1; i < eventos + 1 + n; i++)
 			{
-				entity = new PropuestaEntity();
-				// 1 - Grupos p. / 2 - Grupos g. / 3 - Pub Crawl
-				entity.setTipo("" + (int)(1 + Math.random() * 3));
+				entity = new EventoEntity();
+				entity.setTitulo("Evento " + i);
+				entity.setFecha(new Date());
 				
-				List<ActividadEntity> actividades = new ArrayList<>();
-				List<ActividadEntity> todas = actividadRepo.findAll();
-				
-				for (int j = 0; j < 3; j++)
-				{
-					actividades.add(todas.remove((int)(Math.random() * (todas.size() - 1))));
-				}
-				
-				entity.setActividades(actividades);
-				logger.debug("Fin Create Propuestas");
-				propuestaRepo.save(entity);
+				eventoRepo.save(entity);
 			}
+			logger.debug("Fin Create Eventos");
 			return true;
 		} catch (Exception ex)
 		{
@@ -194,53 +208,10 @@ public class GodServiceImpl implements GodService
 	}
 
 	@Override
-	public boolean createEventos(int n)
+	public boolean createEvenAct(int n)
 	{
-		try
-		{
-			logger.debug("Inicio Create Eventos");
-			long eventos = eventoRepo.findAll().size();
-			
-			EventoEntity entity = null;
-			for (long i = eventos + 1; i < eventos + 1 + n; i++)
-			{
-				entity = new EventoEntity();
-				entity.setTitulo("Evento " + i);
-				entity.setFecha(new Date());
-
-				PropuestaEntity propuesta = propuestaRepo.findAll().get((int)(Math.random() * (propuestaRepo.findAll().size() - 1)));
-				entity.setPropuesta(propuesta);
-				
-				eventoRepo.save(entity);
-			}
-			logger.debug("Fin Create Eventos");
-			return true;
-		} catch (Exception ex)
-		{
-			return false;
-		}
-	}
-
-	@Override
-	public boolean startUp()
-	{
-		try
-		{
-			logger.debug("Inicio Start Up");
-
-			createEmpresas(15);
-			createActividades(50);
-			createPropuestas(18);
-			createEventos(9);
-			createUsuarios(40);
-			createUsuEven(15);
-			
-			logger.debug("Fin Start Up");
-			return true;
-		} catch (Exception ex)
-		{
-			return false;
-		}
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 //	@Override

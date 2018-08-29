@@ -31,7 +31,7 @@ public class FichaEventoController
 		try
 		{
 			Map<String, Object> fichaEvento = fichaEventoService.getFichaEvento(idEvento);
-			String json = JsonUtil.toJson(fichaEvento);
+			String json = JsonUtil.toJson(fichaEvento);//.replace("[", "").replace("]", "");
 
 			return new ResponseEntity<String>(json, HttpStatus.OK);
 		} catch (Exception e)

@@ -40,7 +40,7 @@ public class MainServiceImpl implements MainService
 //	}
 
 	@Override
-	public List<ListItemModel> getEventos(long idUsuario, Pageable pageable)
+	public List<ListItemModel> getEventos(long idUsuario)
 	{
 		List<ListItemModel> items = mainMapper.getEventos(idUsuario);
 		

@@ -30,15 +30,15 @@ public class ActividadEntity implements Serializable
 
 	@Column(name = "precio")
 	private float					precio;
+	
+	//	R - Restaurantes, C - Clubs
+	@Column(name = "tipo", length = 1, nullable = false)
+	private String tipo;
 
 	@ManyToOne
 	@JoinColumn(name = "idEmpresa", nullable = false)
 	@JsonIgnoreProperties("actividades")
 	private EmpresaEntity			empresa;
-
-	@ManyToMany(cascade = { CascadeType.ALL }, mappedBy = "actividades")
-	@JsonIgnore
-	private List<PropuestaEntity>	propuestas;
 
 	// JPA
 	public ActividadEntity()
@@ -46,12 +46,12 @@ public class ActividadEntity implements Serializable
 
 	}
 
-	public ActividadEntity(long idActividad, String nombre, EmpresaEntity empresa, List<PropuestaEntity> propuestas)
+	public ActividadEntity(long idActividad, String nombre, String tipo, EmpresaEntity empresa)
 	{
 		this.idActividad = idActividad;
 		this.nombre = nombre;
+		this.tipo = tipo;
 		this.empresa = empresa;
-		this.propuestas = propuestas;
 	}
 
 	public long getIdActividad()
@@ -74,16 +74,6 @@ public class ActividadEntity implements Serializable
 		this.nombre = nombre;
 	}
 
-	public EmpresaEntity getEmpresa()
-	{
-		return empresa;
-	}
-
-	public void setEmpresa(EmpresaEntity empresa)
-	{
-		this.empresa = empresa;
-	}
-
 	public float getPrecio()
 	{
 		return precio;
@@ -94,13 +84,23 @@ public class ActividadEntity implements Serializable
 		this.precio = precio;
 	}
 
-	public List<PropuestaEntity> getPropuestas()
+	public String getTipo()
 	{
-		return propuestas;
+		return tipo;
 	}
 
-	public void setPropuestas(List<PropuestaEntity> propuestas)
+	public void setTipo(String tipo)
 	{
-		this.propuestas = propuestas;
+		this.tipo = tipo;
+	}
+
+	public EmpresaEntity getEmpresa()
+	{
+		return empresa;
+	}
+
+	public void setEmpresa(EmpresaEntity empresa)
+	{
+		this.empresa = empresa;
 	}
 }

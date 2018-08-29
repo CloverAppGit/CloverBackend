@@ -40,7 +40,9 @@ public class FichaEventoServiceImpl implements FichaEventoService
 		{
 			Map<String, Object> fichaEvento = fichaEventoMapper.getGeneral(idEvento);
 			List<Map<String, Object>> asistentes = fichaEventoMapper.getAsistentes(idEvento);
-			List<Map<String, Object>> itinerario = fichaEventoMapper.getActividades(idEvento);
+//			List<Map<String, Object>> itinerario = fichaEventoMapper.getActividades(idEvento);
+//			List<Map<String, Object>> rxData = (List<Map<String, Object>>) (List<?>) dataList;
+			List<Map<String, Object>> itinerario = (List<Map<String, Object>>) (List<?>) actividadRepo.findByIdEvento(idEvento);
 			
 			fichaEvento.put("asistentes", asistentes);
 			fichaEvento.put("itineratio", itinerario);

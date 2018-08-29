@@ -9,5 +9,5 @@ import com.clover.core.model.ListItemModel;
 public interface MainService
 {
 //	public List<EventoEntity> getEventos(long idUsuario, Pageable pageable);
-	public List<ListItemModel> getEventos(long idUsuario, Pageable pageable);
+	public List<ListItemModel> getEventos(long idUsuario);
 }

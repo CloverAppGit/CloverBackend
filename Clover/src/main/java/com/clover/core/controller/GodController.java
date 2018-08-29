@@ -35,12 +35,6 @@ public class GodController
 		return godService.createActividades(num);
 	}
 	
-	@PutMapping("/createPropuestas/{num}")
-	public boolean createPropuesta(@PathVariable("num") int num)
-	{
-		return godService.createPropuestas(num);
-	}
-	
 	@PutMapping("/createUsuarios/{num}")
 	public boolean createUsuarios(@PathVariable("num") int num)
 	{
@@ -57,5 +51,11 @@ public class GodController
 	public boolean createUsuEven(@PathVariable("num") int num)
 	{
 		return godService.createUsuEven(num);
+	}
+	
+	@PutMapping("/createEvenAct/{num}")
+	public boolean createEvenAct(@PathVariable("num") int num)
+	{
+		return godService.createEvenAct(num);
 	}
 }

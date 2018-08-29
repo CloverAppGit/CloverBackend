@@ -8,7 +8,7 @@ public interface GodService
 
 	public boolean createActividades(int n);
 	
-	public boolean createPropuestas(int n);
+	public boolean createEvenAct(int n);
 	
 	public boolean createUsuarios(int n);
 	

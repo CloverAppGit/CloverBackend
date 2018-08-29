@@ -44,16 +44,9 @@
         		SELECT 
         			id_actividad
         		FROM
-        			propu_act
+        			even_act
         		WHERE
-        			id_propuesta = (
-        				SELECT
-        					id_propuesta
-        				FROM 
-        					evento
-        				WHERE
-        					id_evento = #{idEvento}
-        			)
+        			id_evento = #{idEvento}
         	)
     </select>
 </mapper>

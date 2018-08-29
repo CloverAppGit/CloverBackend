@@ -30,6 +30,9 @@ public class UsuarioEntity implements Serializable
 	@Column(name = "idGoogle")
 	private long				idGoogle;
 
+	@Column(name = "firstLogin")
+	private Date				firstLogin;
+
 	@Column(name = "lastLogin")
 	private Date				lastLogin;
 

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -21,6 +22,10 @@ public class EmpresaEntity implements Serializable
 	@GeneratedValue
 	@Column(name = "idEmpresa")
 	private long idEmpresa;
+
+	@Lob
+	@Column(name = "picture")
+	private byte[]				picture;
 	
 	@Column(name = "nombre")
 	private String nombre;
@@ -28,6 +33,12 @@ public class EmpresaEntity implements Serializable
 	@Column(name = "direccion", length = 300)
 	@Size(min = 0, max = 300)
 	private String direccion;
+	
+	@Column(name = "lat")
+	private double lat;
+	
+	@Column(name = "lon")
+	private double lon;
 	
 	@Column(name = "saludo", length = 300)
 	@Size(min = 0, max = 300)
@@ -43,11 +54,14 @@ public class EmpresaEntity implements Serializable
 		
 	}
 
-	public EmpresaEntity(long idEmpresa, String nombre, String direccion, String saludo, List<ActividadEntity> actividades) 
+	public EmpresaEntity(long idEmpresa, byte[] picture, String nombre, String direccion, double lat, double lon, String saludo, List<ActividadEntity> actividades) 
 	{
 		this.idEmpresa = idEmpresa;
+		this.picture = picture;
 		this.nombre = nombre;
 		this.direccion = direccion;
+		this.lat = lat;
+		this.lon = lon;
 		this.saludo = saludo;
 		this.actividades = actividades;
 	}
@@ -60,6 +74,16 @@ public class EmpresaEntity implements Serializable
 	public void setIdEmpresa(long idEmpresa) 
 	{
 		this.idEmpresa = idEmpresa;
+	}
+
+	public byte[] getPicture()
+	{
+		return picture;
+	}
+
+	public void setPicture(byte[] picture)
+	{
+		this.picture = picture;
 	}
 
 	public String getNombre() 
@@ -80,6 +104,26 @@ public class EmpresaEntity implements Serializable
 	public void setDireccion(String direccion) 
 	{
 		this.direccion = direccion;
+	}
+
+	public double getLat()
+	{
+		return lat;
+	}
+
+	public void setLat(double lat)
+	{
+		this.lat = lat;
+	}
+
+	public double getLon()
+	{
+		return lon;
+	}
+
+	public void setLon(double lon)
+	{
+		this.lon = lon;
 	}
 
 	public String getSaludo() 

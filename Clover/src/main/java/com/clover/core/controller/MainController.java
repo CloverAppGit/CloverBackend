@@ -25,12 +25,12 @@ public class MainController
 	private MainServiceImpl mainService;
 	
 	@GetMapping("/eventos/{idUsuario}")
-	public ResponseEntity getEventos(@PathVariable("idUsuario") long idUsuario, Pageable pageable)
+	public ResponseEntity getEventos(@PathVariable("idUsuario") long idUsuario)
 	{
 		try
 		{
 //			List<EventoEntity> eventos =  mainService.getEventos(idUsuario, pageable);
-			List<ListItemModel> eventos =  mainService.getEventos(idUsuario, pageable);
+			List<ListItemModel> eventos =  mainService.getEventos(idUsuario);
 			String json = JsonUtil.toJson(eventos);
 
 			return new ResponseEntity<String>(json, HttpStatus.OK);
