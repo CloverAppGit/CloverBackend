@@ -2,9 +2,6 @@ package com.clover.core.serviceImpl;
 
 import java.util.Date;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.clover.core.entity.UsuarioEntity;
 import com.clover.core.exceptions.CloverLoginException;
+import com.clover.core.mapper.LoginMapper;
 import com.clover.core.repository.UsuarioRepo;
 import com.clover.core.service.LoginService;
 
@@ -23,6 +21,9 @@ public class LoginServiceImpl implements LoginService
 	@Autowired
 	@Qualifier("UsuarioRepo")
 	private UsuarioRepo usuarioRepo;
+	
+	@Autowired
+	private LoginMapper loginMapper;
 	
 //	@PersistenceContext
 //	private EntityManager em;

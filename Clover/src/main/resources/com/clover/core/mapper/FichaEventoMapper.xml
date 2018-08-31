@@ -4,14 +4,39 @@
 
 <mapper namespace="com.clover.core.mapper.FichaEventoMapper">
 
+    <resultMap id="ListItemResult" type="com.clover.core.model.ListItemModel">
+        <id 	column="id_evento" 	property="id" />
+        <result column="titulo" 	property="titulo" />
+        <result column="fecha" 		property="fecha" />
+    </resultMap>
 
     <select id="getGeneral" resultType="java.util.HashMap">
         SELECT
 			titulo,
-			fecha
+			fecha,
+            sum(precio) as precioPersona,
+            sum(precio) * asistentes as precioTotal
         FROM
-        	evento
+        	evento,
+            actividad,
+            (
+                SELECT
+                    count(1) as asistentes
+                FROM
+                    usu_even
+                WHERE
+                    id_evento = #{idEvento}
+            ) aux
         WHERE
+            id_actividad IN (
+                SELECT
+                    id_actividad
+                FROM
+                    even_act
+                WHERE
+                    id_evento = #{idEvento}
+            )
+            AND
         	id_evento = #{idEvento}
     </select>
 
@@ -35,10 +60,14 @@
 
     <select id="getActividades" resultType="java.util.HashMap">
         SELECT
-			nombre,
-			precio
+			a.nombre,
+			e.nombre AS nombreEmpresa,
+			e.lat,
+			e.lon,
+			a.precio
         FROM
-        	actividad
+        	actividad a,
+        	empresa e
         WHERE
         	id_actividad IN (
         		SELECT 
@@ -48,5 +77,7 @@
         		WHERE
         			id_evento = #{idEvento}
         	)
+            AND
+            a.id_empresa = e.id_empresa
     </select>
 </mapper>
