@@ -40,9 +40,9 @@ public class EmpresaEntity implements Serializable
 	@Column(name = "lon")
 	private double lon;
 	
-	@Column(name = "saludo", length = 300)
-	@Size(min = 0, max = 300)
-	private String saludo;
+//	@Column(name = "saludo", length = 300)
+//	@Size(min = 0, max = 300)
+//	private String saludo;
 	
 	@OneToMany(mappedBy = "empresa")
 	@JsonIgnore
@@ -52,18 +52,6 @@ public class EmpresaEntity implements Serializable
 	public EmpresaEntity()
 	{
 		
-	}
-
-	public EmpresaEntity(long idEmpresa, byte[] picture, String nombre, String direccion, double lat, double lon, String saludo, List<ActividadEntity> actividades) 
-	{
-		this.idEmpresa = idEmpresa;
-		this.picture = picture;
-		this.nombre = nombre;
-		this.direccion = direccion;
-		this.lat = lat;
-		this.lon = lon;
-		this.saludo = saludo;
-		this.actividades = actividades;
 	}
 
 	public long getIdEmpresa() 
@@ -126,15 +114,15 @@ public class EmpresaEntity implements Serializable
 		this.lon = lon;
 	}
 
-	public String getSaludo() 
-	{
-		return saludo;
-	}
-
-	public void setSaludo(String saludo) 
-	{
-		this.saludo = saludo;
-	}
+//	public String getSaludo() 
+//	{
+//		return saludo;
+//	}
+//
+//	public void setSaludo(String saludo) 
+//	{
+//		this.saludo = saludo;
+//	}
 
 	public List<ActividadEntity> getActividades() 
 	{

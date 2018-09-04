@@ -1,10 +1,9 @@
 package com.clover.core.service;
 
 import java.util.List;
-
-import com.clover.core.entity.ActividadEntity;
+import java.util.Map;
 
 public interface CrearEventoService
 {
-	public List<ActividadEntity> getActividades(String tipo);
+	public List<Map<String, Object>> getActividades(String tipo);
 }

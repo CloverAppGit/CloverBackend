@@ -1,6 +1,7 @@
 package com.clover.core.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -25,7 +26,7 @@ import com.clover.core.utils.JsonUtil;
 public class CrearEventoController
 {
 	@Autowired
-	@Qualifier("ExplorarService")
+	@Qualifier("CrearEventoService")
 	private CrearEventoServiceImpl crearEventoService;
 
 	@GetMapping("/actividades/{tipo}")
@@ -33,7 +34,7 @@ public class CrearEventoController
 	{
 		try
 		{
-			List<ActividadEntity> actividades = crearEventoService.getActividades(tipo);
+			List<Map<String, Object>> actividades = crearEventoService.getActividades(tipo);
 			String json = JsonUtil.toJson(actividades);
 
 			return new ResponseEntity<String>(json, HttpStatus.OK);

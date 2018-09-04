@@ -80,7 +80,6 @@ public class GodServiceImpl implements GodService
 			{
 				entity = new EmpresaEntity();
 				entity.setNombre("Empresa " + i);
-				entity.setSaludo("Hola, somos la Empresa " + i + " y tenemos muchas cosas que ofrecerte");
 				empresaRepo.save(entity);
 			}
 			logger.debug("Fin Create Empresas");
@@ -195,7 +194,10 @@ public class GodServiceImpl implements GodService
 				UsuarioEntity usuario = usuarioRepo.findAll().get((int)(Math.random() * (usuarioRepo.findAll().size() - 1)));
 				EventoEntity evento = eventoRepo.findAll().get((int)(Math.random() * (eventoRepo.findAll().size() - 1)));
 
-				UsuEvenEntity ue = new UsuEvenEntity(usuario, evento, false);
+				UsuEvenEntity ue = new UsuEvenEntity();
+				ue.setUsuario(usuario);
+				ue.setEvento(evento);
+				ue.setPagado(false);
 				
 				usuEvenRepo.save(ue);
 			}

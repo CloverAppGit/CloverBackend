@@ -49,16 +49,6 @@ public class EventoEntity implements Serializable
 
 	}
 
-	public EventoEntity(long idEvento, String titulo, Date fecha,
-			List<UsuEvenEntity> usuarios, List<ActividadEntity> actividades)
-	{
-		this.idEvento = idEvento;
-		this.titulo = titulo;
-		this.fecha = fecha;
-		this.usuarios = usuarios;
-		this.actividades = actividades;
-	}
-
 	public long getIdEvento()
 	{
 		return idEvento;

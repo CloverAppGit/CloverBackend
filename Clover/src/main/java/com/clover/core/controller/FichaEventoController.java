@@ -1,6 +1,5 @@
 package com.clover.core.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.clover.core.entity.ActividadEntity;
-import com.clover.core.entity.UsuarioEntity;
 import com.clover.core.serviceImpl.FichaEventoServiceImpl;
 import com.clover.core.utils.JsonUtil;
 
@@ -25,7 +22,7 @@ public class FichaEventoController
 	@Qualifier("FichaEventoService")
 	private FichaEventoServiceImpl fichaEventoService;
 
-	@GetMapping("/{idEvento}")
+	@GetMapping(value= {"/{idEvento}"}, produces="application/json;charset=UTF-8")
 	public ResponseEntity getFichaEvento(@PathVariable("idEvento") long idEvento)
 	{
 		try

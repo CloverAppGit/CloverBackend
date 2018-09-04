@@ -49,13 +49,6 @@ public class UsuEvenEntity implements Serializable
 
 	}
 
-
-	public UsuEvenEntity(UsuarioEntity usuario, EventoEntity evento, boolean pagado)
-	{
-		this.idUsuEven = new UsuEvenEntityId(usuario, evento);
-		this.pagado = pagado;
-	}
-
 	public UsuarioEntity getUsuario()
 	{
 		return idUsuEven.usuario;

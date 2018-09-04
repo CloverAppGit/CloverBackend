@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,12 +29,24 @@ public class ActividadEntity implements Serializable
 	@Column(name = "nombre")
 	private String					nombre;
 
+	@Column(name = "descripcion")
+	private String					descripcion;
+
 	@Column(name = "precio")
 	private float					precio;
+
+	@Column(name = "minPersonas")
+	private int					minPersonas;
 	
 	//	R - Restaurantes, C - Clubs
 	@Column(name = "tipo", length = 1, nullable = false)
 	private String tipo;
+	
+//	//	R - Restaurantes, C - Clubs
+//	@Column(name = "tipo", length = 1, nullable = false)
+//	@Column(name = "saludo", length = 300)
+//	@Size(min = 0, max = 300)
+//	private String tipo;
 
 	@ManyToOne
 	@JoinColumn(name = "idEmpresa", nullable = false)
@@ -44,14 +57,6 @@ public class ActividadEntity implements Serializable
 	public ActividadEntity()
 	{
 
-	}
-
-	public ActividadEntity(long idActividad, String nombre, String tipo, EmpresaEntity empresa)
-	{
-		this.idActividad = idActividad;
-		this.nombre = nombre;
-		this.tipo = tipo;
-		this.empresa = empresa;
 	}
 
 	public long getIdActividad()
@@ -74,6 +79,16 @@ public class ActividadEntity implements Serializable
 		this.nombre = nombre;
 	}
 
+	public String getDescripcion()
+	{
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion)
+	{
+		this.descripcion = descripcion;
+	}
+
 	public float getPrecio()
 	{
 		return precio;
@@ -82,6 +97,16 @@ public class ActividadEntity implements Serializable
 	public void setPrecio(float precio)
 	{
 		this.precio = precio;
+	}
+
+	public int getMinPersonas()
+	{
+		return minPersonas;
+	}
+
+	public void setMinPersonas(int minPersonas)
+	{
+		this.minPersonas = minPersonas;
 	}
 
 	public String getTipo()

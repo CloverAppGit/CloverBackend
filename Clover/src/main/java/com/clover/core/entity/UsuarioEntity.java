@@ -56,19 +56,6 @@ public class UsuarioEntity implements Serializable
 
 	}
 
-	public UsuarioEntity(long idUsuario, long idFacebook, long idGoogle, Date lastLogin, String nombre,
-			String apellidos, byte[] picture, List<UsuEvenEntity> eventos)
-	{
-		this.idUsuario = idUsuario;
-		this.idFacebook = idFacebook;
-		this.idGoogle = idGoogle;
-		this.lastLogin = lastLogin;
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.picture = picture;
-		this.eventos = eventos;
-	}
-
 	public long getIdUsuario()
 	{
 		return idUsuario;

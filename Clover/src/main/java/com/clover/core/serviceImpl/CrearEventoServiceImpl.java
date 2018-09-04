@@ -1,30 +1,33 @@
 package com.clover.core.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.clover.core.entity.ActividadEntity;
-import com.clover.core.repository.ActividadRepo;
+import com.clover.core.mapper.CrearEventoMapper;
 import com.clover.core.service.CrearEventoService;
 
-@Service("ExplorarService")
+@Service("CrearEventoService")
 public class CrearEventoServiceImpl implements CrearEventoService
 {
+//	@Autowired
+//	@Qualifier("ActividadRepo")
+//	private ActividadRepo actividadRepo;
+	
 	@Autowired
-	@Qualifier("ActividadRepo")
-	private ActividadRepo actividadRepo;
+	private CrearEventoMapper crearEventoMapper;
 	
 	private static final Log logger = LogFactory.getLog(CrearEventoService.class);
 
 	@Override
-	public List<ActividadEntity> getActividades(String tipo)
+	public List<Map<String, Object>> getActividades(String tipo)
 	{
-		List<ActividadEntity> actividades = actividadRepo.findByTipo(tipo);
+		List<Map<String, Object>> actividades = crearEventoMapper.getActividades(tipo);
 		
 		return actividades;
 	}

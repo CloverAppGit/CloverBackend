@@ -13,9 +13,10 @@
     <select id="getGeneral" resultType="java.util.HashMap">
         SELECT
 			titulo,
-			fecha,
-            sum(precio) as precioPersona,
-            sum(precio) * asistentes as precioTotal
+			UPPER(DATE_FORMAT(fecha, '%d %b')) as fecha,
+			DATE_FORMAT(fecha, '%H:%i') as hora,
+            CONCAT(CONVERT(sum(precio), CHAR), ' €') as precioPersona,
+            concat(sum(precio) * asistentes, ' €') as precioTotal
         FROM
         	evento,
             actividad,
@@ -60,24 +61,54 @@
 
     <select id="getActividades" resultType="java.util.HashMap">
         SELECT
-			a.nombre,
-			e.nombre AS nombreEmpresa,
-			e.lat,
-			e.lon,
-			a.precio
-        FROM
-        	actividad a,
-        	empresa e
-        WHERE
-        	id_actividad IN (
-        		SELECT 
-        			id_actividad
-        		FROM
-        			even_act
-        		WHERE
-        			id_evento = #{idEvento}
-        	)
-            AND
-            a.id_empresa = e.id_empresa
+		    a.nombre,
+		    em.nombre AS nombreEmpresa,
+		    em.lat,
+		    em.lon,
+		    a.precio,
+		    DATE_FORMAT(ev.fecha,'%d/%m') as fecha,
+		    DATE_FORMAT(ev.fecha,'%H:%i') as hora
+		FROM
+		    actividad a,
+		    empresa em,
+		    evento ev
+		WHERE
+		    a.id_empresa = em.id_empresa
+		    AND a.tipo = 'R'
+		    AND id_actividad IN (
+		        SELECT 
+		            id_actividad
+		        FROM
+		            even_act
+		        WHERE
+		            id_evento = #{idEvento}
+		    )
+		    AND ev.id_evento = #{idEvento}
+		UNION 
+		SELECT
+		    a.nombre,
+		    em.nombre AS nombreEmpresa,
+		    em.lat,
+		    em.lon,
+		    a.precio,
+		    DATE_FORMAT(DATE_ADD(ev.fecha, INTERVAL 1 DAY),'%d/%m') as fecha,
+		    '00:00' as hora
+		FROM
+		    actividad a,
+		    empresa em,
+		    evento ev
+		WHERE
+		    a.id_empresa = em.id_empresa
+		    AND a.tipo = 'C'
+		    AND id_actividad IN (
+		        SELECT 
+		            id_actividad
+		        FROM
+		            even_act
+		        WHERE
+		            id_evento = #{idEvento}
+		    )
+		    AND ev.id_evento = #{idEvento}
+		ORDER BY fecha, hora
     </select>
 </mapper>
