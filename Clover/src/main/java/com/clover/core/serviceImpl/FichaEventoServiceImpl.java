@@ -51,6 +51,7 @@ public class FichaEventoServiceImpl implements FichaEventoService
 			return fichaEvento;
 		} catch (Exception ex)
 		{
+			logger.error(ex.getMessage());
 			return null;
 		}
 	}

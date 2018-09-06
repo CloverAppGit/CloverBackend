@@ -19,6 +19,7 @@
 	</parent>
 
 	<properties>
+		<start-class>com.clover.core.CloverApplication</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
@@ -47,7 +48,8 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.42</version>
+			<!-- version>5.1.42</version -->
+			<version>6.0.6</version>
 		</dependency>
 		
 		<dependency>
@@ -78,6 +80,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>clover-app</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

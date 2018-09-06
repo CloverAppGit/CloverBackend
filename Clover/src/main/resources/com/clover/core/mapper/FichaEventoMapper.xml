@@ -12,33 +12,40 @@
 
     <select id="getGeneral" resultType="java.util.HashMap">
         SELECT
-			titulo,
-			UPPER(DATE_FORMAT(fecha, '%d %b')) as fecha,
-			DATE_FORMAT(fecha, '%H:%i') as hora,
-            CONCAT(CONVERT(sum(precio), CHAR), ' €') as precioPersona,
-            concat(sum(precio) * asistentes, ' €') as precioTotal
-        FROM
-        	evento,
-            actividad,
-            (
-                SELECT
-                    count(1) as asistentes
-                FROM
-                    usu_even
-                WHERE
-                    id_evento = #{idEvento}
-            ) aux
-        WHERE
-            id_actividad IN (
-                SELECT
-                    id_actividad
-                FROM
-                    even_act
-                WHERE
-                    id_evento = #{idEvento}
-            )
-            AND
-        	id_evento = #{idEvento}
+		    e.id_evento,
+		    e.titulo,
+		    UPPER(DATE_FORMAT(fecha, '%d %b')) as fecha,
+		    DATE_FORMAT(fecha, '%H:%i') as hora,
+		    (SELECT 
+		        count(id_usuario) 
+		    FROM 
+		        usu_even
+		    WHERE
+		        id_evento = e.id_evento
+		    ) as asistentes,
+		    (SELECT
+		        CONCAT(CONVERT(sum(precio), char), '€')
+		    FROM
+		        actividad
+		    WHERE
+		        id_actividad IN (
+		            SELECT
+		                id_actividad
+		            FROM
+		                even_act
+		            WHERE
+		                id_evento = e.id_evento
+		        )
+		    ) as precioPersona,
+		    CONCAT(CONVERT(sum(a.precio), char), '€') as precioTotal
+		FROM
+		    evento e
+		LEFT JOIN usu_even ue ON ue.id_evento = e.id_evento
+		LEFT JOIN actividad a ON a.id_actividad IN (SELECT id_actividad FROM even_act WHERE id_evento = e.id_evento)
+		WHERE
+		    e.id_evento = #{idEvento}
+		GROUP BY 
+		    e.id_evento, e.titulo, UPPER(DATE_FORMAT(fecha, '%d %b')), DATE_FORMAT(fecha, '%H:%i')
     </select>
 
     <select id="getAsistentes" resultType="java.util.HashMap">
